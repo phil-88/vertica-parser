@@ -5,7 +5,6 @@
 class DatabaseCatalog(object):
 
     def __init__(self):
-        self.table_pk = dict()
         self.table_columns = dict()
         self.transform_functions = set()
 
@@ -40,15 +39,3 @@ class DatabaseCatalog(object):
                 func_name = (row['schema_name'] + '.' + row['function_name']).lower()
                 self.transform_functions.add(func_name)
 
-            cursor.execute("""
-                select table_schema, table_name,
-                    max(case when column_id like '%-1' then column_name end) as column_name
-                from columns
-                where table_schema = 'DDS'
-                group by table_schema, table_name
-                having count(case when column_name ilike 'Actual_date' then 1 end) = 0
-                """)
-
-            for row in cursor.fetchall():
-                table_name = (row['table_schema'] + '.' + row['table_name']).lower()
-                self.table_pk[table_name] = [row['column_name'].lower()]

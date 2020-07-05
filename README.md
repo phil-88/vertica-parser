@@ -20,7 +20,8 @@ Find all relations in a query:
 Format query:
 ```
 >>> from vertica_parser.formatter import format, fmt_multiline
->>> query = """create table t1(id integer, dim varchar, cnt integer) order by dim segmented by hash(id) all nodes; 
+>>> query = """create table t1(id integer, dim varchar, cnt integer) 
+... order by dim segmented by hash(id) all nodes; 
 ... select dim, sum(cnt) from t1 group by dim"""
 >>> print (format(query, fmt_multiline))
 ```

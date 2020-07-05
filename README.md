@@ -1,5 +1,4 @@
 PLY based parser for vertica sql statements.
-Python 2/3 compatible
 
 Example:
 
